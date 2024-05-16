@@ -7,15 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CollegeRestraunt.classes;
 
 namespace CollegeRestraunt
 {
     public partial class Form1 : Form
     {
         private int UnesenStudent;
+        DBclass Klasa;
         
         public Form1()
         {
+            Klasa = new DBclass();
             InitializeComponent();
             UnesenStudent = 0;
         }
@@ -33,15 +36,16 @@ namespace CollegeRestraunt
 
         private void RegistracijaStudenta_Click(object sender, EventArgs e)
         {
-            RegistrirajStudenta obrazac = new RegistrirajStudenta();
+            RegistrirajStudenta obrazac = new RegistrirajStudenta(Klasa);
             obrazac.ShowDialog();
             Console.WriteLine("Radi gumb");
         }
 
         private void RegistracijaProizvoda_Click(object sender, EventArgs e)
         {
-            RegistracijaProizvoda obrazac = new RegistracijaProizvoda();
-            obrazac.ShowDialog();
+            //RegistracijaProizvoda obrazac = new RegistracijaProizvoda();
+            //obrazac.ShowDialog();
+           
         }
     }
 }
