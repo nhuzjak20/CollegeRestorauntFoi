@@ -35,6 +35,9 @@ namespace CollegeRestraunt
                 Klasa.InsertStudent(textBox1.Text, textBox2.Text);
                 StudentClass noviStudent = new StudentClass((Klasa.velicina + 1).ToString(), textBox1.Text, textBox2.Text);
                 Klasa.students.Add(noviStudent);
+                this.Close();
+               
+       
             }
         }
     }

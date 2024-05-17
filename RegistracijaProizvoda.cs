@@ -16,5 +16,16 @@ namespace CollegeRestraunt
         {
             InitializeComponent();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if(textBox1.Text == "" || textBox2.Text == "")
+            {
+                MessageBox.Show("Unesi Cijelovite Podatke", "Ne radi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } else
+            {
+
+            }
+        }
     }
 }

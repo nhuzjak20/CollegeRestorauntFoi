@@ -21,6 +21,8 @@ namespace CollegeRestraunt
             Klasa = new DBclass();
             InitializeComponent();
             UnesenStudent = 0;
+            dataGridView1.Columns.Add("kod", "Kod Artikla");
+            dataGridView1.Columns.Add("naziv", "Naziv Artikla");
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -31,6 +33,7 @@ namespace CollegeRestraunt
         private void IzlazGumb_Click(object sender, EventArgs e)
         {
             this.Close();
+            
             return;
         }
 
@@ -46,6 +49,39 @@ namespace CollegeRestraunt
             //RegistracijaProizvoda obrazac = new RegistracijaProizvoda();
             //obrazac.ShowDialog();
            
+        }
+
+        private void UnosStudenta_Click(object sender, EventArgs e)
+        {
+            if(BoxUnosStudenta.Text == "")
+            {
+                MessageBox.Show("Unesi Cijelovite Podatke", "Ne radi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } else
+            {
+                foreach(StudentClass student in Klasa.students)
+                {
+                    Console.WriteLine("Student "+student.ImeIprezime.ToString() + "jmbag njegov" + student.JMBAG + "Jmbag Unese:" + BoxUnosStudenta.Text);
+                    if (student.ImeIprezime == BoxUnosStudenta.Text)
+                    {
+                        try
+                        {
+                            button1.BackgroundImage = System.Drawing.Image.FromFile("./images/GreenCheckmar.jpg");
+                            UnesenStudent = 1;
+                        } catch
+                        {
+                            MessageBox.Show("Procitan Student", "Radi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            button1.Enabled = false;
+                            UnesenStudent = 1;
+                            break;
+                        }
+                        
+                    }
+                }
+                if (UnesenStudent==0)
+                {
+                    MessageBox.Show("Ne postoji taj student", "Ne radi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

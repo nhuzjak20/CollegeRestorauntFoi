@@ -12,7 +12,7 @@ namespace CollegeRestraunt.classes
     {
         string Connection = "Server=31.147.206.65;Database=PI2324_dsedlan22_DB;Persist Security Info=True;User Id=PI2324_dsedlan22_User;Password='!;sx].Ga'";
         SqlConnection konekcija;
-        public List<StudentClass> students;
+        public List<StudentClass> students = new List<StudentClass>();
         public int velicina;
         public DBclass()
         {
@@ -28,16 +28,20 @@ namespace CollegeRestraunt.classes
                 while (reader.Read())
                 {
                     Console.WriteLine(reader.GetValue(1) + " " + reader.GetValue(2));
-                    StudentClass noviStudent = new StudentClass(reader.GetValue(0).ToString(), reader.GetValue(2).ToString(), reader.GetValue(3).ToString());
+                    StudentClass noviStudent = new StudentClass(reader.GetValue(0).ToString(), reader.GetValue(1).ToString(), reader.GetValue(2).ToString());
                     students.Add(noviStudent);
+                    
+                    velicina = students.Count;
+                    //Console.WriteLine("Procitan je student " + reader.GetValue(0).ToString() + reader.GetValue(1).ToString() + reader.GetValue(2).ToString());
                 }
+                konekcija.Close();
 
             } catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
             
-            velicina = students.Count;
+            
 
         }
 
@@ -47,7 +51,7 @@ namespace CollegeRestraunt.classes
             try
             {
                 //SqlConnection konekcija = new SqlConnection(Connection);
-                string query = "INSERT INTO Studenti (IDStudenta, ImeIPrezimeStudenta, Jmbag) VALUES("+ velicina.ToString() + ", '"+ ime +"', '"+ jmbag +"'); ";
+                string query = "INSERT INTO Studenti (ImeIPrezimeStudenta, Jmbag) VALUES('"+ ime +"', '"+ jmbag +"'); ";
                 SqlCommand sqlCommand = new SqlCommand(query, konekcija);
 
                 SqlDataAdapter adapter = new SqlDataAdapter();

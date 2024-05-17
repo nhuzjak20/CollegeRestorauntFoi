@@ -50,6 +50,7 @@
             this.UnosStudenta.TabIndex = 0;
             this.UnosStudenta.Text = "Unos Studenta";
             this.UnosStudenta.UseVisualStyleBackColor = true;
+            this.UnosStudenta.Click += new System.EventHandler(this.UnosStudenta_Click);
             // 
             // BoxUnosStudenta
             // 
