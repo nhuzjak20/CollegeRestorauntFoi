@@ -45,6 +45,19 @@ namespace CollegeRestraunt.classes
 
         }
 
+        public int RegistracijaProizvoda(string naziv, string kod)
+        {
+            try
+            {
+                string query = "INSERT INTO Jela (NazivJela, KodJela, CijenaJela) 
+VALUES('Piletina s rižom', 'PIL123', 55.99); ";
+                return 1;
+            } catch
+            {
+                return 0;
+            }
+        }
+
         public string InsertStudent(string ime, string jmbag)
         {
             //string ImeIPrezime, int Jmbag
