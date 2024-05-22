@@ -9,6 +9,9 @@ namespace CollegeRestraunt.classes
     public class StudentClass
     {
         public string ID, JMBAG, ImeIprezime;
-        public StudentClass(string id, string jmbag, string imeiprezime) { ID = id; JMBAG = jmbag; ImeIprezime = imeiprezime; } 
+        public StudentClass(string jmbag, string imeiprezime) { JMBAG = jmbag; ImeIprezime = imeiprezime; }
+        public StudentClass(string id,string jmbag, string imeiprezime) { JMBAG = jmbag; ImeIprezime = imeiprezime; ID = id; }
     }
+
+
 }

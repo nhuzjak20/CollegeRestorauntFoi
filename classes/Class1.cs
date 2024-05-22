@@ -13,11 +13,10 @@ namespace CollegeRestraunt.classes
         string Connection = "Server=31.147.206.65;Database=PI2324_dsedlan22_DB;Persist Security Info=True;User Id=PI2324_dsedlan22_User;Password='!;sx].Ga'";
         SqlConnection konekcija;
         public List<StudentClass> students = new List<StudentClass>();
-        public int velicina;
+        public List<JeloClass> jela = new List<JeloClass>();
         public DBclass()
         {
             konekcija = new SqlConnection(Connection);
-  
             try
             {
                 konekcija.Open();
@@ -27,33 +26,52 @@ namespace CollegeRestraunt.classes
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    Console.WriteLine(reader.GetValue(1) + " " + reader.GetValue(2));
+                    //Console.WriteLine(reader.GetValue(1) + " " + reader.GetValue(2));
                     StudentClass noviStudent = new StudentClass(reader.GetValue(0).ToString(), reader.GetValue(1).ToString(), reader.GetValue(2).ToString());
                     students.Add(noviStudent);
                     
-                    velicina = students.Count;
-                    //Console.WriteLine("Procitan je student " + reader.GetValue(0).ToString() + reader.GetValue(1).ToString() + reader.GetValue(2).ToString());
+                
+                }
+                cmd = new SqlCommand("Select * from Jela", konekcija);
+                reader.Close();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    //Console.WriteLine(reader.GetValue(0) + " " + reader.GetValue(1) + " " + reader.GetValue(2));
+                    JeloClass novoJelo = new JeloClass(reader.GetValue(1).ToString(), reader.GetValue(2).ToString(), reader.GetValue(3).ToString());
+                    jela.Add(novoJelo);
                 }
                 konekcija.Close();
+                reader.Close();
 
             } catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                konekcija.Close();
             }
             
             
 
         }
 
-        public int RegistracijaProizvoda(string naziv, string kod)
+        public int RegistracijaProizvoda(string naziv, string kod, string cijena)
         {
             try
             {
-                string query = "INSERT INTO Jela (NazivJela, KodJela, CijenaJela) 
-VALUES('Piletina s rižom', 'PIL123', 55.99); ";
+                string query = "INSERT INTO Jela (NazivJela, KodJela, CijenaJela)  VALUES('"+ naziv +"', '"+ kod +"',"+ cijena +"); ";
+                SqlCommand sqlCommand = new SqlCommand(query, konekcija);
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                konekcija.Open();
+                adapter.InsertCommand = sqlCommand;
+                adapter.InsertCommand.ExecuteNonQuery();
+                konekcija.Close();
+                
                 return 1;
-            } catch
+            } catch(Exception e)
             {
+                Console.WriteLine(e.Message);
+                konekcija.Close();
                 return 0;
             }
         }

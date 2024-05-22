@@ -14,6 +14,7 @@ namespace CollegeRestraunt
     public partial class Form1 : Form
     {
         private int UnesenStudent;
+        float suma;
         DBclass Klasa;
         
         public Form1()
@@ -21,8 +22,11 @@ namespace CollegeRestraunt
             Klasa = new DBclass();
             InitializeComponent();
             UnesenStudent = 0;
+            suma = 0;
             dataGridView1.Columns.Add("kod", "Kod Artikla");
             dataGridView1.Columns.Add("naziv", "Naziv Artikla");
+            dataGridView1.Columns.Add("cijena", "Cijena Artikla");
+            CijenaSuma.Text = "0";
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -46,8 +50,8 @@ namespace CollegeRestraunt
 
         private void RegistracijaProizvoda_Click(object sender, EventArgs e)
         {
-            //RegistracijaProizvoda obrazac = new RegistracijaProizvoda();
-            //obrazac.ShowDialog();
+            RegistracijaProizvoda obrazac = new RegistracijaProizvoda(Klasa);
+            obrazac.ShowDialog();
            
         }
 
@@ -60,7 +64,7 @@ namespace CollegeRestraunt
             {
                 foreach(StudentClass student in Klasa.students)
                 {
-                    Console.WriteLine("Student "+student.ImeIprezime.ToString() + "jmbag njegov" + student.JMBAG + "Jmbag Unese:" + BoxUnosStudenta.Text);
+                    //Console.WriteLine("Student "+student.ImeIprezime.ToString() + "jmbag njegov" + student.JMBAG + "Jmbag Unese:" + BoxUnosStudenta.Text);
                     if (student.ImeIprezime == BoxUnosStudenta.Text)
                     {
                         try
@@ -81,6 +85,33 @@ namespace CollegeRestraunt
                 {
                     MessageBox.Show("Ne postoji taj student", "Ne radi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private void UnosProizvoda_Click(object sender, EventArgs e)
+        {
+            int uneseno = 0;
+            
+            if (UnosProizvoda.Text == "") MessageBox.Show("Unesi Cijelovite Podatke", "Ne radi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Console.WriteLine("Uneseno je " + textBox1.Text);
+            foreach (JeloClass jelo in Klasa.jela)
+            {
+                Console.WriteLine("Kod proizvoda je" + jelo.Kod);
+                if (textBox1.Text == jelo.Kod)
+                {
+                    dataGridView1.Rows.Add(jelo.Kod, jelo.Naziv, jelo.Cijena);
+                    suma += float.Parse(jelo.Cijena);
+                    CijenaSuma.Text = suma.ToString();
+                    uneseno = 1;
+                }
+            }
+            if (uneseno == 0)
+            {
+                MessageBox.Show("Ne postoji taj proizvod", "Ne radi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else {
+                MessageBox.Show("Procitan Proizvod", "Radi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+               
             }
         }
     }
