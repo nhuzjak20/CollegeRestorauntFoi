@@ -67,17 +67,14 @@ namespace CollegeRestraunt
                     //Console.WriteLine("Student "+student.ImeIprezime.ToString() + "jmbag njegov" + student.JMBAG + "Jmbag Unese:" + BoxUnosStudenta.Text);
                     if (student.ImeIprezime == BoxUnosStudenta.Text)
                     {
-                        try
-                        {
-                            button1.BackgroundImage = System.Drawing.Image.FromFile("./images/GreenCheckmar.jpg");
-                            UnesenStudent = 1;
-                        } catch
-                        {
+                       
                             MessageBox.Show("Procitan Student", "Radi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            button1.Enabled = false;
+                            UnosProizvoda.Enabled = true;
+                            label4.Text = student.ImeIprezime;
+                            label3.Text = student.JMBAG;
                             UnesenStudent = 1;
                             break;
-                        }
+                        
                         
                     }
                 }

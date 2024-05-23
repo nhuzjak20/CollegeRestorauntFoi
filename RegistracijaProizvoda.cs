@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CollegeRestraunt.classes;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace CollegeRestraunt
 {
@@ -84,6 +85,29 @@ namespace CollegeRestraunt
             foreach (JeloClass jelo in Klasa.jela)
             {
                 dataGridView1.Rows.Add(jelo.Kod, jelo.Naziv, jelo.Cijena);
+            }
+        }
+
+        private void PretraživanjeProizvodaTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if(PretraživanjeProizvodaTextBox.Text == "")
+            {
+                dataGridView1.Rows.Clear();
+                dataGridView1.Refresh();
+                foreach (JeloClass jelo in Klasa.jela)
+                {
+                    dataGridView1.Rows.Add(jelo.Kod, jelo.Naziv, jelo.Cijena);
+                }
+            } else
+            {
+                string regx = "[" + PretraživanjeProizvodaTextBox.Text + "]";
+                Regex rg = new Regex(regx);
+                dataGridView1.Rows.Clear();
+                foreach (JeloClass jelo in Klasa.jela)
+                {
+                    if(rg.IsMatch(jelo.Naziv))
+                    dataGridView1.Rows.Add(jelo.Kod, jelo.Naziv, jelo.Cijena);
+                }
             }
         }
     }
