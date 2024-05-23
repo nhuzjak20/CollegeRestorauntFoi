@@ -14,6 +14,7 @@ namespace CollegeRestraunt
     public partial class RegistrirajStudenta : Form
     {
         DBclass Klasa;
+        private string JmbagStudenta;
         public RegistrirajStudenta(DBclass klasa)
         {
             InitializeComponent();
@@ -42,7 +43,8 @@ namespace CollegeRestraunt
                 Klasa.InsertStudent(textBox1.Text, textBox2.Text);
                 StudentClass noviStudent = new StudentClass(textBox1.Text, textBox2.Text);
                 Klasa.students.Add(noviStudent);
-                this.Close();
+                MessageBox.Show("Unesen je student", "Radi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
                
        
             }
@@ -51,6 +53,39 @@ namespace CollegeRestraunt
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Klasa.ObrisiStudenta(textBox2.Text);
+            dataGridView1.Rows.Clear();
+            dataGridView1.Refresh();
+            foreach (StudentClass student in Klasa.students)
+            {
+                dataGridView1.Rows.Add(student.JMBAG, student.ImeIprezime);
+            }
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            JmbagStudenta = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
+            button3.Enabled = true;
+            button4.Enabled = true;
+            textBox2.Text = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
+            textBox1.Text = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Klasa.AzurirajStudenta(textBox1.Text, textBox2.Text, JmbagStudenta);
+            dataGridView1.Rows.Clear();
+            
+            foreach (StudentClass student in Klasa.students)
+            {
+                dataGridView1.Rows.Add(student.JMBAG, student.ImeIprezime);
+            }
+            dataGridView1.Refresh();
         }
     }
 }

@@ -103,24 +103,29 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(349, 110);
             this.dataGridView1.TabIndex = 6;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // button3
             // 
+            this.button3.Enabled = false;
             this.button3.Location = new System.Drawing.Point(161, 97);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(117, 25);
             this.button3.TabIndex = 7;
             this.button3.Text = "Ažuriraj Studenta";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
+            this.button4.Enabled = false;
             this.button4.Location = new System.Drawing.Point(284, 97);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(108, 25);
             this.button4.TabIndex = 8;
             this.button4.Text = "Obriši Studenta";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // RegistrirajStudenta
             // 

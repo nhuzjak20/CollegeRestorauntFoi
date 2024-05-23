@@ -166,5 +166,65 @@ namespace CollegeRestraunt.classes
             }
             return 1;
         }
+        
+        private void UcitavanjeStudenata()
+        {
+            students.Clear();
+            //konekcija.Open();
+            SqlCommand cmd;
+            SqlDataReader reader;
+            cmd = new SqlCommand("Select * from Studenti", konekcija);
+            reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                //Console.WriteLine(reader.GetValue(1) + " " + reader.GetValue(2));
+                StudentClass noviStudent = new StudentClass(reader.GetValue(0).ToString(), reader.GetValue(1).ToString(), reader.GetValue(2).ToString());
+                students.Add(noviStudent);
+
+
+            }
+            //reader.Close();
+            konekcija.Close();
+
+        }
+        public int ObrisiStudenta(string jmbag)
+        {
+            try
+            {
+                konekcija.Open();
+                string query = "DELETE FROM Studenti WHERE Jmbag = '" + jmbag + "'";
+                SqlCommand sqlCommand = new SqlCommand(query, konekcija);
+                Console.WriteLine(query);
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.InsertCommand = sqlCommand;
+                adapter.InsertCommand.ExecuteNonQuery();
+                UcitavanjeStudenata();
+                konekcija.Close();
+                return 1;
+            } catch(Exception ex)
+            {
+                return 0;
+            }
+        }
+   
+        public int AzurirajStudenta(string naziv,string jmbag, string Usporedba)
+        {
+            try
+            {
+                konekcija.Open();
+                string query = "UPDATE Studenti SET ImeIPrezimeStudenta = '"+naziv+"', Jmbag='"+jmbag+"' WHERE Jmbag = '"+Usporedba+"' ";
+                SqlCommand sqlCommand = new SqlCommand(query, konekcija);
+                
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.InsertCommand = sqlCommand;
+                adapter.InsertCommand.ExecuteNonQuery();
+                UcitavanjeStudenata();
+                konekcija.Close();
+                return 1;
+            } catch(System.Exception ex)
+            {
+                return 0;
+            }
+        }
     }
 }
