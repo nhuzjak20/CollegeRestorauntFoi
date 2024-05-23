@@ -14,6 +14,7 @@ namespace CollegeRestraunt
     public partial class RegistracijaProizvoda : Form
     {
         DBclass Klasa;
+        private string KodProizvoda;
         public RegistracijaProizvoda(DBclass klasa)
         {
             InitializeComponent();
@@ -37,6 +38,8 @@ namespace CollegeRestraunt
             {
                 if (Klasa.RegistracijaProizvoda(textBox1.Text, textBox2.Text, textBox3.Text) == 1)
                 {
+                    dataGridView1.Rows.Add(textBox2.Text, textBox1.Text, textBox3.Text);
+                    dataGridView1.Refresh();
                     MessageBox.Show("Proizvod je unesen", "Operacija je uspješna", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
                 else MessageBox.Show("Došlo je do greške", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -55,11 +58,22 @@ namespace CollegeRestraunt
 
         private void UpdateJela(object sender, DataGridViewCellEventArgs e)
         {
-            string KodProizvoda = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
+            KodProizvoda = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
             button3.Enabled = true;
             textBox1.Text = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
             textBox2.Text = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
             textBox3.Text = dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Klasa.AzurirajJelo(textBox1.Text, textBox2.Text, textBox3.Text, KodProizvoda);
+            dataGridView1.Rows.Clear();
+            dataGridView1.Refresh();
+            foreach (JeloClass jelo in Klasa.jela)
+            {
+                dataGridView1.Rows.Add(jelo.Kod, jelo.Naziv, jelo.Cijena);
+            }
         }
     }
 }

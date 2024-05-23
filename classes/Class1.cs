@@ -32,8 +32,9 @@ namespace CollegeRestraunt.classes
                     
                 
                 }
-                cmd = new SqlCommand("Select * from Jela", konekcija);
                 reader.Close();
+                cmd = new SqlCommand("Select * from Jela", konekcija);
+               
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -53,7 +54,21 @@ namespace CollegeRestraunt.classes
             
 
         }
+        private void UcitavanjeJela()
+        {
+            jela.Clear();
+            //konekcija.Open();
+            SqlCommand cmd = new SqlCommand("Select * from Jela", konekcija); 
+            SqlDataReader reader;
+            reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                JeloClass novoJelo = new JeloClass(reader.GetValue(1).ToString(), reader.GetValue(2).ToString(), reader.GetValue(3).ToString());
+                jela.Add(novoJelo);
+            }
+            konekcija.Close();
 
+        }
         public int RegistracijaProizvoda(string naziv, string kod, string cijena)
         {
             try
@@ -63,16 +78,20 @@ namespace CollegeRestraunt.classes
 
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 konekcija.Open();
+                jela.Add(new JeloClass(naziv, kod, cijena));
                 adapter.InsertCommand = sqlCommand;
                 adapter.InsertCommand.ExecuteNonQuery();
-                konekcija.Close();
+                //konekcija.Close();
                 
                 return 1;
             } catch(Exception e)
             {
                 Console.WriteLine(e.Message);
-                konekcija.Close();
                 return 0;
+            } finally
+            {
+                konekcija.Close();
+                
             }
         }
 
@@ -95,6 +114,32 @@ namespace CollegeRestraunt.classes
             {
                 Console.WriteLine(ex.Message);
                 return ex.Message.ToString();
+            }
+            
+        }
+
+        public int AzurirajJelo(string naziv, string kod, string cijena, string Usporedba)
+        {
+            try
+            {
+                konekcija.Open();
+                string query = "UPDATE Jela SET NazivJela = '" + naziv + "', KodJela = '" + kod + "', CijenaJela = " + cijena + " WHERE KodJela = '" + Usporedba + "' ";
+                SqlCommand sqlCommand = new SqlCommand(query, konekcija);
+                Console.WriteLine(query);
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                //konekcija.Open();
+                adapter.InsertCommand = sqlCommand;
+                adapter.InsertCommand.ExecuteNonQuery();
+                
+                UcitavanjeJela();
+                konekcija.Close();
+                
+                return 1;
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                konekcija.Close();
+                return 0;
             }
             
         }
