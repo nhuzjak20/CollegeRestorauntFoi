@@ -18,6 +18,13 @@ namespace CollegeRestraunt
         {
             InitializeComponent();
             Klasa = klasa;
+            dataGridView1.Columns.Add("ime", "Ime Studenta");
+            dataGridView1.Columns.Add("jmbag", "JMBAG");
+            foreach (StudentClass student in Klasa.students)
+            {
+                dataGridView1.Rows.Add(student.JMBAG, student.ImeIprezime);
+            }
+            Klasa = klasa;
         }
 
         private void label1_Click(object sender, EventArgs e)

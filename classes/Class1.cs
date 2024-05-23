@@ -14,6 +14,7 @@ namespace CollegeRestraunt.classes
         SqlConnection konekcija;
         public List<StudentClass> students = new List<StudentClass>();
         public List<JeloClass> jela = new List<JeloClass>();
+
         public DBclass()
         {
             konekcija = new SqlConnection(Connection);
@@ -54,6 +55,7 @@ namespace CollegeRestraunt.classes
             
 
         }
+        
         private void UcitavanjeJela()
         {
             jela.Clear();
@@ -69,6 +71,7 @@ namespace CollegeRestraunt.classes
             konekcija.Close();
 
         }
+        
         public int RegistracijaProizvoda(string naziv, string kod, string cijena)
         {
             try
@@ -141,7 +144,27 @@ namespace CollegeRestraunt.classes
                 konekcija.Close();
                 return 0;
             }
-            
+
+        }
+
+        public int ObrisiJelo(string Kod)
+        {
+            try
+            {
+                konekcija.Open();
+                string query = "DELETE FROM Jela WHERE KodJela = '" + Kod + "'";
+                SqlCommand sqlCommand = new SqlCommand(query, konekcija);
+                Console.WriteLine(query);
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.InsertCommand = sqlCommand;
+                adapter.InsertCommand.ExecuteNonQuery();
+                UcitavanjeJela();
+                konekcija.Close();
+            } catch(Exception ex)
+            {
+
+            }
+            return 1;
         }
     }
 }

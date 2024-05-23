@@ -75,5 +75,16 @@ namespace CollegeRestraunt
                 dataGridView1.Rows.Add(jelo.Kod, jelo.Naziv, jelo.Cijena);
             }
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Klasa.ObrisiJelo(textBox2.Text);
+            dataGridView1.Rows.Clear();
+            dataGridView1.Refresh();
+            foreach (JeloClass jelo in Klasa.jela)
+            {
+                dataGridView1.Rows.Add(jelo.Kod, jelo.Naziv, jelo.Cijena);
+            }
+        }
     }
 }
